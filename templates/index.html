@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#10251f">
+    <title>Careerly — Find your next opportunity</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <script src="{{ url_for('static', filename='app.js') }}" defer></script>
+  </head>
+  <body>
+    <header class="hero">
+      <nav class="nav" aria-label="Main navigation">
+        <a class="brand" href="#" aria-label="Careerly home">
+          <span class="brand-mark" aria-hidden="true">↗</span>careerly
+        </a>
+        <div class="nav-links">
+          <a href="#jobs">Find a job</a>
+          <a href="#career-resources">Career resources</a>
+          <a class="nav-cta" href="#jobs">Explore roles</a>
+        </div>
+      </nav>
+
+      <div class="hero-content">
+        <div class="eyebrow"><span class="eyebrow-dot"></span>Your next chapter starts here</div>
+        <h1>Find work that<br><span>moves you forward.</span></h1>
+        <p class="hero-copy">Discover thoughtful opportunities from teams building what comes next. Your skills deserve the right place to grow.</p>
+
+        <form class="search-box" id="search-form" role="search">
+          <label class="search-field">
+            <span class="search-icon" aria-hidden="true">⌕</span>
+            <input id="role-search" type="search" placeholder="Job title or company" aria-label="Search by job title or company">
+          </label>
+          <label class="search-field">
+            <span class="search-icon" aria-hidden="true">⌖</span>
+            <input id="location-search" type="search" placeholder="City or remote" aria-label="Search by location">
+          </label>
+          <button class="search-button" type="submit">Search jobs</button>
+        </form>
+        <p class="hero-note">Demo listings — replace these sample roles with your own openings.</p>
+      </div>
+    </header>
+
+    <main>
+      <section id="jobs" aria-labelledby="jobs-title">
+        <div class="section-heading">
+          <div>
+            <div class="eyebrow section-eyebrow"><span class="eyebrow-dot"></span>Curated opportunities</div>
+            <h2 id="jobs-title">Roles worth a closer look</h2>
+            <p id="result-count" aria-live="polite">Showing {{ jobs|length }} sample roles</p>
+          </div>
+          <a class="text-link" href="#jobs">Browse all roles <span aria-hidden="true">→</span></a>
+        </div>
+
+        <div class="filters" aria-label="Filter by role type">
+          <button class="filter active" type="button" data-filter="all" aria-pressed="true">All roles</button>
+          <button class="filter" type="button" data-filter="Design" aria-pressed="false">Design</button>
+          <button class="filter" type="button" data-filter="Engineering" aria-pressed="false">Engineering</button>
+          <button class="filter" type="button" data-filter="Marketing" aria-pressed="false">Marketing</button>
+          <button class="filter" type="button" data-filter="Product" aria-pressed="false">Product</button>
+        </div>
+
+        <div class="job-grid" id="job-grid">
+          {% for job in jobs %}
+          <article class="job-card" data-category="{{ job.category }}" data-search="{{ (job.title ~ ' ' ~ job.company ~ ' ' ~ job.location ~ ' ' ~ job.category)|lower }}">
+            <div class="card-top">
+              <div class="company-mark" aria-hidden="true">{{ job.company[0] }}</div>
+              <button class="save-button" type="button" aria-label="Save {{ job.title }}" aria-pressed="false">♡</button>
+            </div>
+            <h3>{{ job.title }}</h3>
+            <div class="company">{{ job.company }}</div>
+            <div class="job-meta">
+              <span class="tag">{{ job.location }}</span>
+              <span class="tag">{{ job.category }}</span>
+            </div>
+            <div class="card-bottom">
+              <span class="salary">{{ job.salary }}</span>
+              <span class="job-type">{{ job.type }}</span>
+            </div>
+          </article>
+          {% endfor %}
+        </div>
+        <div class="empty-state" id="empty-state" hidden>No matching roles. Try a different title, company, or location.</div>
+      </section>
+
+      <section class="bottom-banner" id="career-resources">
+        <div>
+          <h2>Make your next move with confidence.</h2>
+          <p>Use search and filters to find a role that fits your goals.</p>
+        </div>
+        <a href="#jobs">Explore sample roles <span aria-hidden="true">→</span></a>
+      </section>
+    </main>
+
+    <footer>
+      <span><strong>careerly</strong> — find your next opportunity.</span>
+      <span>Sample listings for preview</span>
+    </footer>
+  </body>
+</html>
